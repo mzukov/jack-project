@@ -1,0 +1,208 @@
+// This file is part of www.nand2tetris.org
+// and the book "The Elements of Computing Systems"
+// by Nisan and Schocken, MIT Press.
+// File name: projects/09/Square/SquareGame.jack
+
+/**
+ * Implements the Square Dance game.
+ * In this game you can move a black square around the screen and
+ * change its size during the movement.
+ * In the beginning, the square is located at the top-left corner
+ * of the screen. The arrow keys are used to move the square.
+ * The 'z' & 'x' keys are used to decrement and increment the size.
+ * The 'q' key is used to quit the game.
+ */
+class SquareGame {
+
+
+    // The square's movement direction
+    field Array randomNumbers;
+
+    /** Constructs a new Square Game. */
+    constructor SquareGame new() {
+        let randomNumbers = Array.new(20);
+        let randomNumbers[0] = 89;
+        let randomNumbers[1] = 9588;
+        let randomNumbers[2] = 7365;
+        let randomNumbers[3] = 9859;
+        let randomNumbers[4] = 1900;
+        let randomNumbers[5] = 6969;
+        let randomNumbers[6] = 6908;
+        let randomNumbers[7] = 1488;
+        let randomNumbers[8] = 8962;
+        let randomNumbers[9] = 911;
+        let randomNumbers[10] = 9623;
+        let randomNumbers[11] = 1939;
+        let randomNumbers[12] = 148;
+        let randomNumbers[13] = 9773;
+        let randomNumbers[14] = 228;
+        let randomNumbers[15] = 420;
+        let randomNumbers[16] = 8171;
+        let randomNumbers[17] = 5962;
+        let randomNumbers[18] = 3974;
+        let randomNumbers[19] = 1;
+        return this;
+    }
+
+    /** Deallocates the object's memory. */
+    method void dispose() {
+        do Memory.deAlloc(this);
+        return;
+    }
+
+    /** Starts the game. Handles inputs from the user that control
+     *  the square's movement, direction and size. */
+    method void run() {
+        var char key;
+        var boolean exit;
+        var int variant;
+        var int i;
+        var int memoryKey;
+
+        let i = 0;
+        let exit = false;
+
+        do Screen.drawLine(255, 1, 255, 255);
+
+        while (~exit) {
+            // waits for a key to be pressed.
+            while (key = 0) {
+                let key = Keyboard.keyPressed();
+            }
+
+            if (key = 81) {
+                let exit = true;
+            }
+            if (key = 49){
+                do Screen.drawRectangle(108, 108, 148, 148);
+            }
+            if (key = 50){
+                do Screen.drawCircle(128, 128, 20);
+            }
+            if (key = 51){
+                do Screen.drawCircle(128, 128, 10);
+            }
+            if (key = 52){
+                do Screen.drawCircle(128, 128, 40);
+            }
+            if (key = 53){
+                do Printer.drawMoney();
+            }
+            let memoryKey = Keyboard.keyPressed();
+            // waits for the key to be released.
+            while (~(key = 0)) {
+                let key = Keyboard.keyPressed();
+                if ((key > 48) & (key < 54)){
+                    if (i > 19){
+                        let i = 0;
+                    }
+                    let variant = (randomNumbers[i] + key) - (((randomNumbers[i] + key) / 5) * 5);
+                    if (variant = 0){
+                        do Screen.drawRectangle(364, 108, 404, 148);
+                    }
+                    if (variant = 1){
+                        do Screen.drawCircle(384, 128, 20);
+                    }
+                    if (variant = 2){
+                        do Screen.drawCircle(384, 128, 10);
+                    }
+                    if (variant = 3){
+                        do Screen.drawCircle(384, 128, 40);
+                    }
+                    if (variant = 4){
+                        do Screen.drawMoney();
+                    }
+                }
+            }
+            let i = i + 1;
+            do Sys.wait(2000);
+            do Screen.clearScreen();
+            if (memoryKey = 49){
+                if ((variant = 1) | (variant = 3)){
+                    do writeWin();
+                }
+                if ((variant = 2) | (variant = 4)){
+                    do writeLose();
+                }
+                if (variant = 0){
+                    do writeDraw();
+                }
+            }
+            if (memoryKey = 50){
+                if ((variant = 2) | (variant = 4)){
+                    do writeWin();
+                }
+                if ((variant = 0) | (variant = 3)){
+                    do writeLose();
+                }
+                if (variant = 1){
+                    do writeDraw();
+                }
+            }
+            if (memoryKey = 51){
+                if ((variant = 0) | (variant = 3)){
+                    do writeWin();
+                }
+                if ((variant = 1) | (variant = 4)){
+                    do writeLose();
+                }
+                if (variant = 2){
+                    do writeDraw();
+                }
+            }
+            if (memoryKey = 52){
+                if ((variant = 1) | (variant = 4)){
+                    do writeWin();
+                }
+                if ((variant = 0) | (variant = 2)){
+                    do writeLose();
+                }
+                if (variant = 3){
+                    do writeDraw();
+                }
+            }
+            if (memoryKey = 53){
+                if ((variant = 0) | (variant = 2)){
+                    do writeWin();
+                }
+                if ((variant = 1) | (variant = 3)){
+                    do writeLose();
+                }
+                if (variant = 4){
+                    do writeDraw();
+                }
+            }
+            do Screen.drawLine(255, 1, 255, 255);
+        }
+            
+        return;
+	}
+
+    method void writeWin(){
+        do Screen.drawCircle(256, 128, 50);
+        do Sys.wait(2000);
+        do Screen.clearScreen();
+        return;
+    }
+
+    method void writeLose(){
+        do Screen.drawCircle(256, 128, 100);
+        do Sys.wait(2000);
+        do Screen.clearScreen();
+        return;
+    }
+    
+    method void writeDraw(){
+        do Screen.drawCircle(256, 128, 10);
+        do Sys.wait(2000);
+        do Screen.clearScreen();
+        return;
+    }
+
+    method void drawMoney(){
+        do Screen.drawCircle(128, 128, 32);
+        do Screen.setColor(false);
+        do Screen.drawCircle(128, 128, 29);
+        return;
+    }
+}
