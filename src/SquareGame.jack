@@ -74,19 +74,19 @@ class SquareGame {
                 let exit = true;
             }
             if (key = 49){
-                do Screen.drawRectangle(108, 108, 148, 148);
+                do drawGeo(0);
             }
             if (key = 50){
-                do Screen.drawCircle(128, 128, 20);
+                do drawBeer(0);
             }
             if (key = 51){
-                do Screen.drawCircle(128, 128, 10);
+                do drawDream(0);
             }
             if (key = 52){
-                do Screen.drawCircle(128, 128, 40);
+                do drawMM(0);
             }
             if (key = 53){
-                do Printer.drawMoney();
+                do drawMoney(0);
             }
             let memoryKey = Keyboard.keyPressed();
             // waits for the key to be released.
@@ -98,24 +98,24 @@ class SquareGame {
                     }
                     let variant = (randomNumbers[i] + key) - (((randomNumbers[i] + key) / 5) * 5);
                     if (variant = 0){
-                        do Screen.drawRectangle(364, 108, 404, 148);
+                        do drawGeo(256);
                     }
                     if (variant = 1){
-                        do Screen.drawCircle(384, 128, 20);
+                        do drawBeer(256);
                     }
                     if (variant = 2){
-                        do Screen.drawCircle(384, 128, 10);
+                        do drawDream(256);
                     }
                     if (variant = 3){
-                        do Screen.drawCircle(384, 128, 40);
+                        do drawMM(256);
                     }
                     if (variant = 4){
-                        do Screen.drawMoney();
+                        do drawMoney(256);
                     }
                 }
             }
             let i = i + 1;
-            do Sys.wait(2000);
+            do Sys.wait(500);
             do Screen.clearScreen();
             if (memoryKey = 49){
                 if ((variant = 1) | (variant = 3)){
@@ -158,7 +158,7 @@ class SquareGame {
                     do writeLose();
                 }
                 if (variant = 3){
-                    do writeDraw();
+                    do writeDraw(); 
                 }
             }
             if (memoryKey = 53){
@@ -178,31 +178,161 @@ class SquareGame {
         return;
 	}
 
-    method void writeWin(){
-        do Screen.drawCircle(256, 128, 50);
-        do Sys.wait(2000);
+    method void writeLose(){
+        do Screen.drawRectangle(322, 155, 346, 160);
+        do Screen.drawRectangle(322, 95, 346, 100);
+        do Screen.drawRectangle(197, 155, 221, 160);
+        do Screen.drawRectangle(197, 130, 221, 135);
+        do Screen.drawRectangle(122, 95, 182, 100);
+        do Screen.drawRectangle(216, 135, 221, 155);
+        do Screen.drawRectangle(149, 100, 154, 160);
+        do Screen.drawRectangle(317, 95, 322, 160);
+        do Screen.drawRectangle(346, 95, 351, 160);
+        do Screen.drawRectangle(230, 95, 235, 160);
+        do Screen.drawRectangle(192, 95, 197, 160);
+        do Screen.drawRectangle(283, 95, 288, 110);
+        do Screen.drawRectangle(278, 106, 283, 121);
+        do Screen.drawRectangle(293, 118, 298, 133);
+        do Screen.drawRectangle(273, 119, 278, 134);
+        do Screen.drawRectangle(298, 131, 303, 146);
+        do Screen.drawRectangle(371, 95, 376, 111);
+        do Screen.drawRectangle(388, 132, 393, 147);
+        do Screen.drawRectangle(393, 95, 398, 111);
+        do Screen.drawRectangle(376, 132, 381, 147);
+        do Screen.drawRectangle(268, 132, 273, 147);
+        do Screen.drawRectangle(303, 144, 308, 159);
+        do Screen.drawRectangle(376, 109, 381, 124);
+        do Screen.drawRectangle(393, 146, 398, 161);
+        do Screen.drawRectangle(388, 109, 393, 124);
+        do Screen.drawRectangle(371, 145, 376, 160);
+        do Screen.drawRectangle(263, 145, 268, 160);
+        do Screen.drawRectangle(288, 106, 293, 121);
+        do Screen.drawRectangle(381, 121, 388, 132);
+        do Sys.wait(500);
         do Screen.clearScreen();
         return;
     }
 
-    method void writeLose(){
-        do Screen.drawCircle(256, 128, 100);
-        do Sys.wait(2000);
-        do Screen.clearScreen();
+    method void writeWin(){
+        do Screen.drawRectangle(253, 84, 408, 89);
+        do writeLose();
         return;
     }
     
     method void writeDraw(){
-        do Screen.drawCircle(256, 128, 10);
-        do Sys.wait(2000);
+        do Screen.drawCircle(256, 128, 100);
+        do Screen.setColor(false);
+        do Screen.drawCircle(256, 128, 95);
+        do Screen.setColor(true);
+        do Screen.drawRectangle(312, 84, 408, 89);
+        do Screen.drawRectangle(160, 84, 256, 89);
+        do Screen.drawRectangle(256, 165, 312, 170);
+        do Sys.wait(500);
         do Screen.clearScreen();
         return;
     }
 
-    method void drawMoney(){
-        do Screen.drawCircle(128, 128, 32);
+    method void drawMoney(int shift){
+        do Screen.drawCircle(128 +  shift, 128, 64);
         do Screen.setColor(false);
-        do Screen.drawCircle(128, 128, 29);
+        do Screen.drawCircle(128 + shift, 128, 59);
+        do Screen.setColor(true);
+        do Screen.drawRectangle(106 + shift, 88, 111 + shift, 169);
+        do Screen.drawRectangle(106 + shift, 88, 157 + shift, 93);
+        do Screen.drawRectangle(152 + shift, 88, 157 + shift, 128);
+        do Screen.drawRectangle(102 + shift, 123, 157 + shift, 128);
+        do Screen.drawRectangle(100 + shift, 146, 123 + shift, 151);
         return;
     }
+
+    method void drawMM(int shift){
+        do drawM(0 + shift, 0);
+        do drawM(43 + shift, -36);
+        return;
+    }
+
+    method void drawM(int shift, int shiftY){
+        do Screen.drawRectangle(113 + shift, 125 + shiftY, 117 + shift, 129 + shiftY);
+        do Screen.drawRectangle(109 + shift, 129 + shiftY, 113 + shift, 133 + shiftY);
+        do Screen.drawRectangle(105 + shift, 133 + shiftY, 109 + shift, 137 + shiftY);
+        do Screen.drawRectangle(101 + shift, 137 + shiftY, 105 + shift, 141 + shiftY);
+        do Screen.drawRectangle(97 + shift, 133 + shiftY, 101 + shift, 137 + shiftY);
+        do Screen.drawRectangle(93 + shift, 129 + shiftY, 97 + shift, 133 + shiftY);
+        do Screen.drawRectangle(89 + shift, 125 + shiftY, 93 + shift, 129 + shiftY);
+        do Screen.drawRectangle(117 + shift, 121 + shiftY, 121 + shift, 171 + shiftY);
+        do Screen.drawRectangle(85 + shift, 121 + shiftY, 89 + shift, 171 + shiftY);
+        return;
+    }
+    
+    method void drawGeo(int shift){
+        do Screen.drawCircle(151 + shift, 155, 12);
+        do Screen.setColor(false);
+        do Screen.drawCircle(149 + shift, 153, 7);
+        do Screen.setColor(true);
+        do Screen.drawRectangle(122 + shift, 159, 136 + shift, 167);
+        do Screen.drawRectangle(122 + shift, 144, 136 + shift, 153);
+        do Screen.drawRectangle(122 + shift, 130, 136 + shift, 138);
+        do Screen.drawRectangle(108 + shift, 90, 155 + shift, 108);
+        do Screen.drawRectangle(113 + shift, 130, 122 + shift, 167);
+        do Screen.drawRectangle(90 + shift, 90, 108 + shift, 167);
+        return;
+    }
+
+    method void drawDream(int shift){
+        do Screen.drawRectangle(120 + shift, 100, 125 + shift, 122);
+        do Screen.drawRectangle(120 + shift, 73, 125 + shift, 95);
+        do Screen.drawRectangle(100 + shift, 73, 105 + shift, 95);
+        do Screen.drawRectangle(156 + shift, 73, 161 + shift, 122);
+        do Screen.drawRectangle(168 + shift, 73, 173 + shift, 122);
+        do Screen.drawRectangle(145 + shift, 134, 150 + shift, 183);
+        do Screen.drawRectangle(123 + shift, 134, 128 + shift, 183);
+        do Screen.drawRectangle(93 + shift, 134, 98 + shift, 183);
+        do Screen.drawRectangle(155 + shift, 134, 160 + shift, 183);
+        do Screen.drawRectangle(177 + shift, 134, 182 + shift, 183);
+        do Screen.drawRectangle(190 + shift, 73, 195 + shift, 122);
+        do Screen.drawRectangle(134 + shift, 73, 139 + shift, 122);
+        do Screen.drawRectangle(74 + shift, 78, 79 + shift, 122);
+        do Screen.drawRectangle(96 + shift, 178, 118 + shift, 183);
+        do Screen.drawRectangle(98 + shift, 134, 108 + shift, 139);
+        do Screen.drawRectangle(100 + shift, 117, 120 + shift, 122);
+        do Screen.drawRectangle(128 + shift, 134, 145 + shift, 139);
+        do Screen.drawRectangle(173 + shift, 73, 190 + shift, 78);
+        do Screen.drawRectangle(139 + shift, 73, 156 + shift, 78);
+        do Screen.drawRectangle(128 + shift, 178, 145 + shift, 183);
+        do Screen.drawRectangle(160 + shift, 156, 177 + shift, 161);
+        do Screen.drawRectangle(173 + shift, 90, 190 + shift, 95);
+        do Screen.drawRectangle(100 + shift, 95, 125 + shift, 100);
+        do Screen.drawRectangle(61 + shift, 73, 93 + shift, 78);
+        return;
+    }
+
+    method void drawBeer(int shift){
+        do Screen.drawRectangle(90 + shift, 108, 116 + shift, 160);
+        do Screen.setColor(false);
+        do Screen.drawRectangle(93 + shift, 111, 113 + shift, 157);
+        do Screen.setColor(true);
+        do Screen.drawRectangle(116 + shift, 120, 131 + shift, 122);
+        do Screen.drawRectangle(129 + shift, 122, 131 + shift, 146);
+        do Screen.drawRectangle(116 + shift, 146, 131 + shift, 148);
+        do Screen.drawRectangle(116 + shift, 112, 121 + shift, 114);
+        do Screen.drawRectangle(119 + shift, 103, 121 + shift, 112);
+        do Screen.drawRectangle(87 + shift, 108, 90 + shift, 110);
+        do Screen.drawRectangle(87 + shift, 101, 89 + shift, 108);
+        do Screen.drawRectangle(89 + shift, 101, 94 + shift, 103);
+        do Screen.drawRectangle(92 + shift, 95, 94 + shift, 101);
+        do Screen.drawRectangle(94 + shift, 95, 100 + shift, 97);
+        do Screen.drawRectangle(100 + shift, 95, 102 + shift, 100);
+        do Screen.drawRectangle(102 + shift, 98, 110 + shift, 100);
+        do Screen.drawRectangle(110 + shift, 98, 112 + shift, 101);
+        do Screen.drawRectangle(110 + shift, 101, 121 + shift, 103);
+
+        do Screen.drawCircle(163 + shift, 110, 15);
+        do Screen.setColor(false);
+        do Screen.drawCircle(163 + shift, 110, 13);
+        do Screen.setColor(true);
+        do Screen.drawRectangle(155 + shift, 143, 171 + shift, 145);
+        do Screen.drawRectangle(162 + shift, 124, 164 + shift, 160);
+        return;
+    }
+    
 }
